@@ -4,29 +4,36 @@ require "csv"
 # Class Definition
 class EventManager
   def initialize
-    puts "EventManager Initialized."
+    #puts "EventManager Initialized."
     filename = "event_attendees.csv"
     @file = CSV.open(filename, {:headers => true, :header_converters => :symbol})
-    #def print_names
-    #	@file.each do |line|
-    	#puts line.inspect
-     # 	puts line[:first_name] + " " + line[:last_name]
-    #	end
-  	#end
-  	def print_numbers
-  		@file.each do |line|	
-  			number = line[:homephone]
-  			#puts number
-  			clean_number = number.delete(".")
-  			puts clean_number
-  			
-  		end
-  	end
-  	
+    
+	def clean_zipcode(original)
+		@file.each do |line|
+    		clean_zipcode = line[:zipcode]
+			
+				if clean_zipcode.length < 5
+					clean_zipcode = "0" + clean_zipcode #Add zeros on the front
+				else
+				#Do Nothing
+				end
+		
+			return clean_zipcode
+		end
+	end
+   
+   
+   	def print_zipcodes
+    	@file.each do |line|
+    		zipcode = clean_zipcode(line[:zipcode])
+    		puts zipcode
+    	end
+    end
+    
+    
   end
 end
 
 # Script
 manager = EventManager.new
-#manager.print_names
-manager.print_numbers
+manager.print_zipcodes
