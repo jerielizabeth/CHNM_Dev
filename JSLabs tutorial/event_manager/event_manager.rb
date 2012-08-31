@@ -3,22 +3,30 @@ require "csv"
 
 # Class Definition
 class EventManager
+	INVALID_ZIPCODE = "00000"
+	
   def initialize
     #puts "EventManager Initialized."
     filename = "event_attendees.csv"
     @file = CSV.open(filename, {:headers => true, :header_converters => :symbol})
     
-	def clean_zipcode(original)
+    
+    
+	def clean_zipcode(original =line[:zipcode])
 		@file.each do |line|
-    		clean_zipcode = line[:zipcode]
-			
-				if clean_zipcode.length < 5
-					clean_zipcode = "0" + clean_zipcode #Add zeros on the front
+		
+				if original.nil?
+					result = INVALID_ZIPCODE
+				elsif original.length < 5
+					while original.length < 5
+						original = "0" + clean_zipcode #Add zeros on the front
+					end 
+								
 				else
 				#Do Nothing
 				end
 		
-			return clean_zipcode
+			return zipcode
 		end
 	end
    
@@ -37,3 +45,4 @@ end
 # Script
 manager = EventManager.new
 manager.print_zipcodes
+manager.clean_zipcode
