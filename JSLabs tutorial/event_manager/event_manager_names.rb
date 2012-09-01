@@ -1,5 +1,6 @@
 # Dependencies
 require "csv"
+require "sunlight"
 
 # Class Definition
 class EventManager
@@ -7,14 +8,15 @@ class EventManager
     puts "EventManager Initialized."
     filename = "event_attendees.csv"
     @file = CSV.open(filename, {:headers => true, :header_converters => :symbol})
-    
-    def print_names
+  end
+   
+  def print_names
     	@file.each do |line|
     		#puts line.inspect
     		puts line[:first_name] + " " + line[:last_name]
     	end
-    end	
-  end
+  end	
+  
 end
 
 # Script

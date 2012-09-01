@@ -1,5 +1,6 @@
 # Dependencies
 require "csv"
+require "sunlight"
 
 # Class Definition
 class EventManager
@@ -9,9 +10,10 @@ class EventManager
     @file = CSV.open(filename, {:headers => true, :header_converters => :symbol})
     
     def clean_number(original)
-    	@file.each do |line|
-    		number = line[:homephone]
+    	    		
+  
     		clean_number = number.delete(".)( --")
+    			
     			if clean_number.length == 10
     				#Do Nothing
     			elsif clean_number.length == 11
